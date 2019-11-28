@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>UFO - Explorer</title>
+	<style>
+		#results{
+			float: right;
+			width: 600px;
+			border: 1px solid #EEE;
+		}
+	</style>
+</head>
+<body onkeydown="getKeybordEvent(event)">
+	<canvas id="ufoCanvas" width="650" height="350" style="border:1px solid #999;"></canvas>
+	<div id="results"></div>
+	<script>
+		var ctx = document.getElementById('ufoCanvas');
+		var WIDTH = ctx.width;
+		var HEIGHT = ctx.height;
+		var W_M = H_M = 1000;
+		var RATIO = 50;
+		/* cordinate of the first colomn and first row af map [array] */ 
+		var X_MAP = W_M / 2;
+		var Y_MAP = H_M / 2;
+		var COL = WIDTH / RATIO;
+		var ROW = HEIGHT / RATIO;
+		var SCORE = 0;
+		/* Duration of game by second */
+		var DURATION = 30;
+
+		var results = document.getElementById('results');
+		var dataScore = localStorage.getItem('lastScore').split('#');
+		var table = '<table border="1" cellspacing="0"><tr><th>Time</th><th>Score</th></tr>';
+		console.log(dataScore);
+		for(i in dataScore){
+			var tmpStr = dataScore[i].split('!');
+			if(tmpStr[0])
+				table += '<tr><td>' + tmpStr[0] + '</td><td>' + tmpStr[1] + '</td></tr>';
+		}
+		table += '</table>';
+		results.innerHTML = table;
+
+		ctx = ctx.getContext("2d");
+		/* arr resource : 0=blank 80%, 1=mount 5%, 2=gold 2% 600s, 3=silver 4% 300s, 4=oil 9% 100s*/
+		arrResources = [];
+		for(var i = 0; i<W_M; i++){
+			arrResources[i] = [];
+			for(var j = 0; j < H_M; j++){
+				var randomValue = Math.floor(Math.random() * 100);
+				if(randomValue < 80)
+					arrResources[i][j] = 0;
+				else if(randomValue >= 80 && randomValue <85)
+					arrResources[i][j] = 1;
+				else if(randomValue >= 85 && randomValue <87)
+					arrResources[i][j] = 2;
+				else if(randomValue >= 87 && randomValue <91)
+					arrResources[i][j] = 3;
+				else
+					arrResources[i][j] = 4;
+			}
+		}
+
+		ctx.strokeRect(0,0,50,50);
+
+		ufoImg = new Image();
+		ufoImg.src = 'img/ufo.png';
+		
+		ufoImg.onload = function(){
+			ctx.drawImage(ufoImg, WIDTH/2 - 16, HEIGHT/2 - 16);
+		}
+
+		/* all resource images */	
+		mountImg = new Image();
+		mountImg.src = 'img/mount.png';
+
+		goldImg = new Image();
+		goldImg.src = 'img/gold.png';
+
+		silverImg = new Image();
+		silverImg.src = 'img/silver.png';
+
+		oilImg = new Image();
+		oilImg.src = 'img/oil.png';
+
+		oilImg.onload = function(){
+			reMap(X_MAP,Y_MAP);	
+		}
+
+		/* define function for get events 
+		38 "ArrowUp"
+		37 "ArrowLeft"
+		39 "ArrowRight"
+		40 "ArrowDown"                  */
+		function getKeybordEvent(e) {
+			if ((DURATION - timer) <= 0)
+				return 0;
+			if(e.which == 39 && X_MAP < W_M) reMap(X_MAP + 1,Y_MAP);
+			else if(e.which == 40 && Y_MAP < H_M) reMap(X_MAP,Y_MAP + 1);
+			else if(e.which == 37 && X_MAP > 0) reMap(X_MAP - 1,Y_MAP);
+			else if(e.which == 38 && Y_MAP > 0) reMap(X_MAP,Y_MAP - 1);
+		}
+
+		function reMap(x,y){
+			X_MAP = x;
+			Y_MAP = y;
+
+			var center = arrResources[X_MAP +Math.floor(COL/2)][Y_MAP + Math.floor(ROW/2)];
+			arrResources[X_MAP +Math.floor(COL/2)][Y_MAP + Math.floor(ROW/2)] = 0;
+			if((DURATION - timer) < 0){
+				alert('Your times up, Score: ' + SCORE);
+				clearTimeout(interval);
+			}
+
+			if(center == 1){
+				SCORE -= 1000;
+			}
+			else if(center == 2){
+				SCORE += 600;
+			}
+			else if(center == 3){
+				SCORE += 300;
+			}
+			else if(center == 4){
+				SCORE += 100;
+			}
+
+			
+			ctx.clearRect(0,0,WIDTH,HEIGHT);
+			ctx.drawImage(ufoImg, WIDTH/2 - 16, HEIGHT/2 - 16);
+			for (var i = 0; i <  WIDTH / RATIO; i++) {
+				for(var j = 0; j < HEIGHT / RATIO; j++){
+					if(arrResources[i + X_MAP][j + Y_MAP] == 1)
+						ctx.drawImage(mountImg, RATIO * i + 5,RATIO * j + 5,40,40);
+					else if(arrResources[i + X_MAP][j + Y_MAP] == 2)
+						ctx.drawImage(goldImg, RATIO * i + 5,RATIO * j + 5,40,40);
+					else if(arrResources[i + X_MAP][j + Y_MAP] == 3)
+						ctx.drawImage(silverImg, RATIO * i + 5,RATIO * j + 5,40,40);
+					else if(arrResources[i + X_MAP][j + Y_MAP] == 4)
+						ctx.drawImage(oilImg, RATIO * i + 5,RATIO * j + 5,40,40);
+				}
+			}
+			ctx.fillStyle = 'orange';
+			ctx.font = '20px courier';
+			ctx.fillText('Score: '+SCORE,10,HEIGHT-10);
+			ctx.fillText('Time: '+ (DURATION - timer) + 's',WIDTH - 110,HEIGHT-10);
+		}
+
+		timer = 0;
+		var interval = setInterval(function(){
+			timer++;
+			if((DURATION - timer) <= 0){
+				alert('Your times up, Score: ' + SCORE);
+				clearTimeout(interval);
+				date = new Date();
+				if(SCORE > 100)
+					localStorage.setItem('lastScore',localStorage.getItem('lastScore') + date.toString().substr(0,24) + '!' + SCORE + '#');
+			}
+			reMap(X_MAP,Y_MAP);
+		},1000);
+
+		// console.log(localStorage.getItem('test'));
+
+
+	</script>
+</body>
+</html>

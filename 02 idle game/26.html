@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Project 2</title>
+    </head>
+    <body>
+        <canvas id="canvas" width="400" height="600" style="border:1px solid black"></canvas>
+
+        <script>
+            var canvas = document.getElementById("canvas");
+            var ctx = canvas.getContext("2d");
+            var money = 2.360;
+            var speed = 0;
+
+            canvas.addEventListener('click',choose);
+            
+            var arrFruits = [
+                {name:'Tomato',src:'images/Tomato.png',score:0.0001,price:0.01,x:320,y:60,qty:0},
+                {name:'Onion',src:'images/Onion.png',score:0.001,price:1 / 2,x:320,y:150,qty:0},
+                {name:'Eggplant',src:'images/Eggplant.png',score:0.01,price:100 / 4,x:320,y:240,qty:0},
+                {name:'Pepper',src:'images/Pepper.png',score:0.100,price:10000 / 8,x:320,y:330,qty:0},
+                {name:'Cabbage',src:'images/Cabbage.png',score:10,price:1000000 / 16,x:320,y:420,qty:0},
+                {name:'Pumpkin',src:'images/Pumpkin.png',score:1000000,price:100000000 / 32,x:320,y:510,qty:0}
+            ];
+
+            var arrIMG = [];
+
+
+            for(var i = 0; i < arrFruits.length; i++){
+                arrIMG[i] = new Image();
+                arrIMG[i].src = arrFruits[i].src;
+            }
+
+            arrIMG[arrFruits.length - 1].onload = function () {
+                for(var i = 0; i < arrFruits.length; i++ ){
+                    ctx.drawImage(arrIMG[i], arrFruits[i].x, arrFruits[i].y);
+                    ctx.textAlign = "center";
+                    ctx.fillStyle = "#ff9000";
+                    ctx.font = "12px sans-serif";
+                    ctx.fillText(Math.round(arrFruits[i].price * 100) / 100 + '$',arrFruits[i].x + 32,arrFruits[i].y + 73);
+                    ctx.fillText(arrFruits[i].score + 't/ms',arrFruits[i].x + 32,arrFruits[i].y + 86);
+                }
+                    
+
+            };
+
+            function choose(e){
+                var x = e.clientX - canvas.offsetLeft;
+                var y = e.clientY - canvas.offsetTop;
+
+                arrFruits.forEach(function(n){
+                    if(x >= n.x && x <= n.x + 64 && y >= n.y && y <= n.y + 64){
+                        if(n.price < money){
+                            speed += n.score;
+                            money -= n.price;
+                            console.log(n.name);
+                            n.qty++;
+                        }
+                        
+                    }
+                        
+                });
+
+                console.log(x,y);
+            }
+
+
+            var start = setInterval(function(){
+                ctx.clearRect(0,0,400,59);
+                ctx.clearRect(0,0,319,600);
+                money += speed;
+                ctx.font = "25px sans-serif";
+                ctx.fillStyle = "gray";
+
+                ctx.fillText(Math.floor(money) + '.' + (Math.round((money % 1) * 1000) + '000000').substr(0,3) + ' $',200,25);
+                ctx.fillText(Math.round(speed * 10000) / 10000 + ' t/ms',200,55);
+
+                for(var i = 0; i < arrFruits.length; i++ ){
+                    ctx.drawImage(arrIMG[i], arrFruits[i].x, arrFruits[i].y);
+                    ctx.textAlign = "center";
+                    ctx.fillStyle = "gray";
+                    ctx.font = "12px sans-serif";
+                    ctx.fillText('(' + arrFruits[i].qty+ ')',arrFruits[i].x - 32,arrFruits[i].y + 35);
+                }
+            },10)
+  
+
+        </script>
+    </body>
+</html>

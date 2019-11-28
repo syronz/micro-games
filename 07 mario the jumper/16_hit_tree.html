@@ -1,0 +1,136 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Game: Mario</title>
+    </head>
+    <body onkeydown="getKeyCode(event)">
+        <canvas id="marioCanvas" height="300" width="800" style="border:1px solid black"></canvas>  
+
+    <script>
+        var canvas = document.getElementById("marioCanvas");
+        var ctx = canvas.getContext('2d');
+        var G = 2.8;
+        var CEIL = 280;
+
+        var bgImg = new Image();
+        bgImg.src = 'images/bg.jpg';
+        
+        var arrM = [];
+        arrM[0] = new Image();
+        arrM[0].src = 'images/marioWalk1.png';
+        arrM[1] = new Image();
+        arrM[1].src = 'images/marioWalk2.png';
+        arrM[2] = new Image();
+        arrM[2].src = 'images/marioWalk3.png';
+
+
+        var Mario = function(x,y){
+            this.x = x;
+            this.y = y;
+            this.dir = 'down';
+            this.v = 20;
+        }
+
+        Mario.prototype.draw = function(pos){
+            ctx.drawImage(arrM[pos],this.x,this.y,42,68);
+        }
+        Mario.prototype.setSpeed = function(){ 
+            if(this.dir == 'down'){
+                this.v = G + this.v;
+                this.y += this.v;
+                if(this.y >= CEIL - 68)
+                    this.y = CEIL - 68;
+            }
+            else{
+                this.v = this.v - G;
+                this.y -= this.v;
+                if(this.v <= 0){
+                    this.v = 0;
+                    this.dir = 'down';
+                }
+            }
+        }
+        Mario.prototype.isHit = function(arrTree){
+            for(n in arrTree){
+                if(Math.abs((this.x+20) - arrTree[n].x) < 10 && (232 - this.y) < arrTree[n].height){
+                    window.clearTimeout(run);
+                    console.log(this,arrTree[n]);
+                }
+            }
+            
+        }
+
+        var Tree = function(x,height){
+            this.x = x;
+            this.height = height;
+            this.speed = 5;
+        }
+        Tree.prototype.draw = function(pos){
+            ctx.beginPath();
+            ctx.strokeStyle = 'brown';
+            ctx.lineWidth = 6;
+            ctx.moveTo(this.x,CEIL);
+            ctx.lineTo(this.x,CEIL - this.height);
+            ctx.stroke();
+        }
+        Tree.prototype.setX = function(){
+            this.x -= this.speed;
+        }
+        var arrT = [];
+
+        var m1 = new Mario(50,CEIL - 368);
+
+        for(i=0; i<100; i++){
+            arrT[i] = new Tree(Math.random()*1000*i,80 * Math.random());
+        }
+        
+
+        var walk = 800;
+        var run = setInterval(function(){
+            ctx.clearRect(0,0,800,300);
+            if(walk == 1100)
+                walk = 0;
+
+            if((walk%1100) > 300 && (walk%1100) < 1100){
+                ctx.drawImage(bgImg,
+                    walk % 1100,0,
+                    800,300,
+                    0,0,
+                    800,300);
+
+                ctx.drawImage(bgImg,
+                    0,0,
+                    800,300,
+                    800 - ((Math.floor(walk / 300)-1) * 300 + (walk % 300)),0,
+                    800,300);
+              
+            }
+            else
+                ctx.drawImage(bgImg,walk % 1100,0,800,300,0,0,800,300);
+
+            
+            walk++;
+            m1.draw(walk%3);
+            m1.setSpeed();
+            for(n in arrT){
+                arrT[n].setX();
+                arrT[n].draw();
+            }
+            
+
+            m1.isHit(arrT);
+        },50);
+
+        getKeyCode = function(e){
+            console.log(e.code);
+            if(e.code == 'Space'){
+                if(m1.y >= (CEIL - 68)){
+                    m1.dir = 'up';
+                    m1.v = 30;
+                }
+                
+            }
+        }
+    </script>
+    </body>
+</html>

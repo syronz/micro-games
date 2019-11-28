@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Project 2</title>
+    </head>
+    <body>
+        <canvas id="canvas" width="400" height="600" style="border:1px solid black"></canvas>
+
+        <script>
+            var canvas = document.getElementById("canvas");
+            var ctx = canvas.getContext("2d");
+
+            var arr = [50,80,220,250,300,340,180];
+            console.log(arr);
+            arr.reverse();
+            console.log(arr);
+
+            
+            var sum = 0;
+
+            for(var i = 0; i < arr.length; i++){
+                sum += arr[i];
+                ctx.arc(arr[i],50,5,0,Math.PI * 2);
+                ctx.fill();
+            }
+
+            console.log(sum);
+
+            
+
+        </script>
+    </body>
+</html>

@@ -1,0 +1,109 @@
+<!doctype html>
+<html>
+    <head>
+        <title>TicTacToe</title>
+    </head>
+    <body>
+        <canvas id="myCanvas"></canvas>
+
+        <script>
+            var canvas = document.getElementById("myCanvas");
+            var ctx = canvas.getContext("2d");
+
+            var LENGTH = canvas.width = canvas.height = 210;
+            var CELL_LENGTH = LENGTH / 3;
+            var arr = [[],[],[]];
+            var T = 'O';
+            var TURN = function(){
+                var tmp = T;
+                T = (T == 'O') ? 'X' : 'O';
+                return tmp;
+            }
+            var PROGRESS = true;
+
+            ctx.moveTo(CELL_LENGTH,0);
+            ctx.lineTo(CELL_LENGTH,LENGTH);
+            ctx.moveTo(CELL_LENGTH * 2,0);
+            ctx.lineTo(CELL_LENGTH * 2,LENGTH);
+
+            ctx.moveTo(0,CELL_LENGTH);
+            ctx.lineTo(LENGTH,CELL_LENGTH);
+            ctx.moveTo(0,CELL_LENGTH * 2);
+            ctx.lineTo(LENGTH,CELL_LENGTH * 2);
+
+            ctx.strokeRect(0,0,LENGTH,LENGTH);
+
+            ctx.stroke();
+
+            canvas.addEventListener("click",clicked);
+
+            function clicked(e){
+                var mx = e.clientX-canvas.offsetTop;
+                var my = e.clientY-canvas.offsetLeft;
+                var x = Math.floor(mx / CELL_LENGTH);
+                var y = Math.floor(my / CELL_LENGTH);
+                if(!arr[x][y] && PROGRESS){
+                    arr[x][y] = TURN();
+                    ctx.font = "40px sans-serif";
+                    ctx.textBaseline = "middle";
+                    ctx.textAlign = "center";
+                    ctx.fillText(arr[x][y],x * CELL_LENGTH + CELL_LENGTH / 2,y * CELL_LENGTH + CELL_LENGTH / 2);
+                }
+                else{
+                    alert('You cant!');
+                }
+
+                if(checkEnd())
+                    alert(checkEnd());
+                
+            }
+
+            function checkEnd(){
+                for(var i=0;i<3;i++){
+                    if(arr[i][1] != undefined  && (arr[i][0] == arr[i][1]) && (arr[i][1] == arr[i][2])){
+                        PROGRESS = false;
+                        return arr[i][0] + " is winner!";
+                    }
+                        
+                }
+
+                for(var j=0;j<3;j++){
+                    if(arr[1][j] != undefined  && (arr[0][j] == arr[1][j]) && (arr[1][j] == arr[2][j])){
+                        PROGRESS = false;
+                        return arr[0][j] + " is winner!";
+                    }
+                        
+                }
+
+                if(arr[1][1] != undefined  && (arr[0][0] == arr[1][1]) && (arr[1][1] == arr[2][2])){
+                    PROGRESS = false;
+                    return arr[0][0] + " is winner!";
+                }
+                    
+
+                if(arr[1][1] != undefined  && (arr[2][0] == arr[1][1]) && (arr[1][1] == arr[0][2])){
+                    PROGRESS = false;
+                    return arr[1][1] + " is winner!";
+                }
+                    
+
+                var count = 0;
+                for(var i=0;i<3;i++){
+                    for(var j=0;j<3;j++){
+                        if(arr[i][j] != undefined)
+                            count++;
+                    }
+                }
+                if(count == 9){
+                    PROGRESS = false;
+                    return "They are equal!";
+                }
+                    
+
+                return false;
+            }
+
+            
+        </script>
+    </body>
+</html>

@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Canvas</title>
+    </head>
+    <body>
+        <canvas id="myCanvas" width="500" height="200" style="border:1px solid red"></canvas> 
+        <script>
+            var canvas = document.getElementById("myCanvas");
+            var ctx = canvas.getContext("2d");
+
+            var a = (4 + 3) * 2;
+
+            ctx.font = "40px sans-serif";
+            ctx.fillText('result in a = ' + a,50,50);
+
+            
+
+
+        </script>
+    </body>
+</html>

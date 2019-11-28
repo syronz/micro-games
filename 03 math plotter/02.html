@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Project 3</title>
+    </head>
+    <body>
+        <canvas id="bordersCanvas" style="border:1px solid black"></canvas>
+        <script>
+            var W = 400; //width
+            var H = 400; //height
+            var canvas = document.getElementById('bordersCanvas');
+            canvas.width = W;
+            canvas.height = H;
+
+            var ctx = canvas.getContext("2d");
+
+            console.log(canvas.height);
+
+
+
+            ctx.moveTo(0,0);
+            ctx.lineTo(60,90);
+            ctx.stroke();
+
+        </script>
+    </body>
+</html>

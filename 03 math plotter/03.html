@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Project 3</title>
+    </head>
+    <body>
+        <canvas id="bordersCanvas" style="border:1px solid black"></canvas>
+        <script>
+            var W = 400; //width
+            var H = 400; //height
+            var canvas = document.getElementById('bordersCanvas');
+            canvas.width = W;
+            canvas.height = H;
+
+            var ctx = canvas.getContext("2d");
+
+            console.log(canvas.height);
+
+            ctx.beginPath();
+            ctx.strokeStyle = 'red';
+            ctx.moveTo(0,H/2);
+            ctx.lineTo(W,H/2);
+            ctx.moveTo(W/2,0);
+            ctx.lineTo(W/2,H);
+            ctx.stroke();
+
+            ctx.translate(W/2,H/2);
+            ctx.beginPath();
+            ctx.strokeStyle = 'blue';
+            ctx.moveTo(-50,-50);
+            ctx.lineTo(80,30);
+            ctx.stroke();
+
+        </script>
+    </body>
+</html>

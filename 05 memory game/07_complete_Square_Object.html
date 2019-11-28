@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+    <head>
+        <title> Project 5 </title>
+    </head>
+    <body>
+        <canvas id="smallGame" width="400" height="400" style="border: 0px solid grey"></canvas>
+
+        <script>
+            var canvas = document.getElementById("smallGame");
+            var ctx = canvas.getContext("2d");
+
+            function Square(n){
+                this.n = n;
+            }
+            Square.prototype.draw = function(i){
+                ctx.strokeRect(4 + i * 100 - Math.floor(i /4) * 400, 4 + Math.floor(i /4) * 100,96,96);
+            }
+            var a = new Square(3);
+
+            
+            var arrImg = [];
+            
+            for(var i = 1; i<9; i++){
+                arrImg[i-1] = new Image();
+                arrImg[i-1].src = 'image/' + i + '.png';
+            }
+
+
+            
+            var arr = [];
+            var k = 1;
+            
+            for(var i = 0; i < 16; i+=2){
+                arr[i] = arr[i+1] = k++;
+            }
+
+            function shuffle(array) {
+                var currentIndex = array.length, temporaryValue, randomIndex;
+                while (0 !== currentIndex) {
+                    randomIndex = Math.floor(Math.random() * currentIndex);
+                    currentIndex -= 1;
+
+                    temporaryValue = array[currentIndex];
+                    array[currentIndex] = array[randomIndex];
+                    array[randomIndex] = temporaryValue;
+                }
+                return array;
+            }
+
+            arr = shuffle(arr);
+            var arrSquare = [];
+            for(var i = 0; i < 16; i++){
+                arrSquare[i] = new Square(arr[i]);
+            }
+
+            //-------------------------- Drawing Part
+            arrImg[7].onload = function() {
+                for(var i = 0; i < 16; i++){
+                    ctx.drawImage(arrImg[arr[i]-1],18 + i * 100 - Math.floor(i /4) * 400, 18 + Math.floor(i /4) * 100);
+                    arrSquare[i].draw(i);
+                }
+
+            };
+
+
+
+            
+
+            console.log(arr,arrImg,arrSquare);
+
+        </script>
+    </body>
+</html>

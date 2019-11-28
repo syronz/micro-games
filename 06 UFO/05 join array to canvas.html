@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>UFO - Explorer</title>
+</head>
+<body>
+	<canvas id="ufoCanvas" width="600" height="400" style="border:1px solid #999;"></canvas>
+	<script>
+		var ctx = document.getElementById('ufoCanvas');
+		var WIDTH = ctx.width;
+		var HEIGHT = ctx.height;
+		var W_M = H_M = 1000;
+		var RATIO = 50;
+
+		ctx = ctx.getContext("2d");
+
+		/* arr resource : 0=blank, 1=mount, 2=gold, 3=silver, 4=oil*/
+		arrResources = [];
+		for(var i = 0; i<W_M; i++){
+			arrResources[i] = [];
+			for(var j = 0; j < H_M; j++)
+				arrResources[i][j] = Math.floor(Math.random() * 5);
+		}
+
+		ctx.strokeRect(0,0,50,50);
+
+		ufoImg = new Image();
+		ufoImg.src = 'img/ufo.png';
+		
+		ufoImg.onload = function(){
+			ctx.drawImage(ufoImg, WIDTH/2 - 16, HEIGHT/2 - 16);
+		}
+
+		/* all resource images */	
+		mountImg = new Image();
+		mountImg.src = 'img/mount.png';
+
+		goldImg = new Image();
+		goldImg.src = 'img/gold.png';
+
+		silverImg = new Image();
+		silverImg.src = 'img/silver.png';
+
+		oilImg = new Image();
+		oilImg.src = 'img/oil.png';
+
+		oilImg.onload = function(){
+
+			for (var i = 0; i <  WIDTH / RATIO; i++) {
+				for(var j = 0; j < HEIGHT / RATIO; j++){
+					if(arrResources[i][j] == 1)
+						ctx.drawImage(mountImg, RATIO * i + 5,RATIO * j + 5,40,40);
+					else if(arrResources[i][j] == 2)
+						ctx.drawImage(goldImg, RATIO * i + 5,RATIO * j + 5,40,40);
+					else if(arrResources[i][j] == 3)
+						ctx.drawImage(silverImg, RATIO * i + 5,RATIO * j + 5,40,40);
+					else if(arrResources[i][j] == 4)
+						ctx.drawImage(oilImg, RATIO * i + 5,RATIO * j + 5,40,40);
+				}
+			}
+			
+		}
+
+	</script>
+</body>
+</html>

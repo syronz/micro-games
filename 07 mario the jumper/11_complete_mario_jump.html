@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Game: Mario</title>
+    </head>
+    <body onkeydown="getKeyCode(event)">
+        <canvas id="marioCanvas" height="400" width="300" style="border:1px solid red"></canvas>  
+    <body>
+    <script>
+        var canvas = document.getElementById("marioCanvas");
+        var ctx = canvas.getContext('2d');
+        var G = 3.8;
+        var CEIL = 380;
+        
+        var marioImg = new Image();
+        marioImg.src = 'images/marioFrame.png';
+
+        marioImg.onload = function(){
+            draw();
+        }
+
+        var Mario = function(x,y){
+            this.x = x;
+            this.y = y;
+            this.dir = 'down';
+            this.v = 0;
+        }
+
+        Mario.prototype.draw = function(pos){
+            ctx.putImageData(arrM[pos],this.x,this.y);
+        }
+        Mario.prototype.setSpeed = function(){ 
+            if(this.dir == 'down'){
+                this.v = G + this.v;
+                this.y += this.v;
+                if(this.y >= CEIL - 68)
+                    this.y = CEIL - 68;
+            }
+            else{
+                this.v = this.v - G;
+                this.y -= this.v;
+                if(this.v <= 0){
+                    this.v = 0;
+                    this.dir = 'down';
+                }
+            }
+            
+        }
+
+
+
+        var arrM = [];
+        var draw = function(){
+            ctx.drawImage(marioImg,0,0,306,274);
+
+            arrM[0] = ctx.getImageData(15, 12, 48, 68); //walk1
+            arrM[1] = ctx.getImageData(15 + 48, 12, 35, 68); //walk2
+            arrM[2] = ctx.getImageData(15 + 48 * 2, 12, 35, 68); //walk3
+            arrM[3] = ctx.getImageData(15 + 48 * 3, 12, 35, 68); //break
+            arrM[4] = ctx.getImageData(15 + 48 * 4, 12, 35, 68); //jump
+            arrM[5] = ctx.getImageData(15 + 48 * 5, 12, 35, 68); //stop
+
+        }
+
+        var m1 = new Mario(100,CEIL - 268);
+
+        var walk = 0;
+        var run = setInterval(function(){
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+            walk++;
+            console.log(m1);
+            m1.draw(walk%3);
+            m1.setSpeed();
+        },100);
+
+        getKeyCode = function(e){
+            console.log(e.code);
+            if(e.code == 'Space'){
+                if(m1.y >= (CEIL - 68)){
+                    m1.dir = 'up';
+                    m1.v = 30;
+                }
+                
+            }
+        }
+    </script>
+</html>

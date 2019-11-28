@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Project 2</title>
+    </head>
+    <body>
+        <canvas id="canvas" width="400" height="600" style="border:1px solid black"></canvas>
+
+        <script>
+            var canvas = document.getElementById("canvas");
+            var ctx = canvas.getContext("2d");
+
+            var timer = 20;
+            var flag = 1;
+            var start = setInterval(function(){
+                ctx.clearRect(0,0,400,600);
+                ctx.strokeRect(timer,20,100,50);
+                if(timer > 300)
+                    flag = -1;
+                if(timer < 0)
+                    flag = 1;
+                timer += flag;
+                console.log(timer);
+            },10);
+        </script>
+    </body>
+</html>

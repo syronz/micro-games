@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Canvas</title>
+    </head>
+    <body>
+        <canvas id="myCanvas" width="500" height="200" style="border:1px solid red"></canvas> 
+        <script>
+            var canvas = document.getElementById("myCanvas");
+            var ctx = canvas.getContext("2d");
+            
+            canvas.addEventListener("mousemove",clicked);
+
+            function clicked(e){
+                var x = e.clientX - canvas.offsetLeft;
+                var y = e.clientY - canvas.offsetTop;
+                console.log(x,y);
+                ctx.clearRect(0,0,500,200);
+
+                if(x > 0 && x < 70){
+                    ctx.strokeStyle = 'Blue';
+                    ctx.strokeRect(20,120,50,50);
+                }
+                else if(x > 90 && x < 140){
+                    ctx.strokeStyle = 'green';
+                    ctx.strokeRect(90,120,50,50);
+                }
+                else if(x > 160 && x < 210){
+                    ctx.strokeStyle = 'yellow';
+                    ctx.strokeRect(160,120,50,50);
+                }
+                else if(x > 230 && x < 280){
+                    ctx.strokeStyle = 'red';
+                    ctx.strokeRect(230,120,50,50);
+                }
+                else if(x > 300 && x < 350){
+                    ctx.strokeStyle = 'brown';
+                    ctx.strokeRect(300,120,50,50);
+                }
+                else if(x > 370 && x < 420){
+                    ctx.strokeStyle = 'orange';
+                    ctx.strokeRect(370,120,50,50);
+                }
+                else{
+                    ctx.font = "40px sans-serif";
+                    ctx.fillText('' ,50,50);
+                }
+
+            
+            }
+
+            color = null;
+            ctx.lineWidth = 6;
+
+
+            
+           
+        </script>
+    </body>
+</html>

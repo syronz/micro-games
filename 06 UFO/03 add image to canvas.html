@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>UFO - Explorer</title>
+</head>
+<body>
+	<canvas id="ufoCanvas" width="600" height="400" style="border:1px solid #999;"></canvas>
+	<script>
+		var ctx = document.getElementById('ufoCanvas');
+		var WIDTH = ctx.width;
+		var HEIGHT = ctx.height;
+
+		ctx = ctx.getContext("2d");
+
+		ufoImg = new Image();
+		ufoImg.src = 'img/ufo.png';
+		
+		ufoImg.onload = function(){
+			ctx.drawImage(ufoImg, WIDTH/2 - 16, HEIGHT/2 - 16);
+		}		
+	</script>
+</body>
+</html>

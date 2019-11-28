@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Project 2</title>
+    </head>
+    <body>
+        <canvas id="canvas" width="500" height="600" style="border:1px solid black"></canvas>
+
+        <script>
+            var canvas = document.getElementById("canvas");
+            var ctx = canvas.getContext("2d");
+
+            function one(n){
+                console.log(n);
+                ctx.strokeRect(10,10,100 * Math.log(n),100 * Math.log(n));
+
+                if(n == 1)
+                    return 0;
+                else
+                    return one(n-1);
+            }
+
+            one(100);
+
+        </script>
+    </body>
+</html>

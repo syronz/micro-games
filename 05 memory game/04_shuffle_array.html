@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+    <head>
+        <title> Project 5 </title>
+    </head>
+    <body>
+        <canvas id="smallGame" width="400" height="400" style="border: 1px solid grey"></canvas>
+
+        <script>
+            var canvas = document.getElementById("smallGame");
+            var ctx = canvas.getContext("2d");
+
+            ctx.fillRect(100,100,100,50);
+
+            var imageObj = new Image();
+            imageObj.src = 'image/1.png';
+
+            imageObj.onload = function() {
+                ctx.drawImage(imageObj, 69, 50);
+            };
+
+            var arr = [];
+            var k = 1;
+            for(var i = 0; i < 16; i+=2){
+                arr[i] = arr[i+1] = k++;
+            }
+
+            function shuffle(array) {
+                var currentIndex = array.length, temporaryValue, randomIndex;
+                while (0 !== currentIndex) {
+                    randomIndex = Math.floor(Math.random() * currentIndex);
+                    currentIndex -= 1;
+
+                    temporaryValue = array[currentIndex];
+                    array[currentIndex] = array[randomIndex];
+                    array[randomIndex] = temporaryValue;
+                }
+                return array;
+            }
+
+            console.log(arr);
+
+            console.log(shuffle(arr));
+            
+        </script>
+    </body>
+</html>

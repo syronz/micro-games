@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+    <head>
+        <title>TicTacToe</title>
+    </head>
+    <body>
+        <canvas id="myCanvas" style="border:1px solid red" height="210" width="210"></canvas>
+
+        <script>
+            var canvas = document.getElementById("myCanvas");
+            var ctx = canvas.getContext("2d");
+            console.log(canvas,ctx);
+
+            ctx.moveTo(0,0);
+            ctx.lineTo(210,210);
+            ctx.stroke();
+        </script>
+    </body>
+</html>

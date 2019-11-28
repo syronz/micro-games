@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Snake Game</title>
+	<style>
+		#snakeCV{
+			border: 1px solid red;
+		}
+	</style>
+</head>
+<body onkeydown="return myKeyPress(event)">
+	<canvas id="snakeCV" height="400" width="400"></canvas>
+
+	<script>
+		var ctx = document.getElementById('snakeCV');
+		ctx = ctx.getContext("2d");
+
+		ctx.fillStyle = "#000000";
+		// ctx.fillRect(0,0,39,39);
+		// ctx.fillRect(2*40,40,39,39);
+
+		// var arrCord = [
+		// [0,0,0,0,0,0,0,0,0,0],
+		// [0,0,0,0,0,0,0,0,0,0],
+		// [0,0,0,0,0,0,0,0,0,0],
+		// [0,0,0,0,0,0,0,0,0,0],
+		// [0,0,0,0,0,0,1,0,0,0],
+		// [0,0,0,0,0,0,1,0,0,0],
+		// [0,0,0,0,0,0,1,0,0,0],
+		// [0,0,0,0,1,1,1,0,0,0],
+		// [0,0,0,0,0,0,0,0,0,0],
+		// [0,0,0,0,0,0,0,0,0,0]
+		// ];
+
+		// for(var j = 0; j< 10; j++){
+		// 	for (var i = 0; i < 10; i++) {
+		// 		if(arrCord[j][i])
+		// 			ctx.fillRect(i*40,j*40,39,39);
+		// 	}
+		// }
+
+		function Snake(x,y,front = null,back = null){
+			this.x = x;
+			this.y = y;
+			this.front = front;
+			this.back = back;
+		}
+
+		Snake.prototype.show = function(){
+			ctx.fillRect(this.x*40,this.y*40,39,39);
+			if(this.back)
+				this.back.show();
+		}
+
+		Snake.prototype.returnTail = function(){
+			if(this.back)
+				return this.back.returnTail();
+			else
+				return this;
+		}
+
+		var head = new Snake(6,4);
+		// console.log(head);
+
+		var cell1 = new Snake(6,5,head);
+		head.back = cell1;
+
+		var cell2 = new Snake(6,6,cell1);
+		cell1.back = cell2;
+
+		var cell3 = new Snake(6,7,cell2);
+		cell2.back = cell3;
+
+		var cell4 = new Snake(5,7,cell3);
+		cell3.back = cell4;
+
+		
+
+
+		head.show();
+		
+
+		food = {x:2,y:2};
+
+		food.show = function(){
+			ctx.fillStyle = "#00FF00";
+			ctx.fillRect(this.x*40,this.y*40,39,39);
+		}
+
+		// food.show();
+
+		/* dir can have ['left' 37,'up' 38,'right' 39,'down' 40] */
+		dir = 'up'; 
+
+		mx = head.x;
+		my = head.y;
+		setInterval(function(){
+			ctx.clearRect(0,0,400,400);
+			if(dir == 'left')
+				mx--;
+			else if(dir == 'right')
+				mx++;
+			else if(dir == 'up')
+				my--;
+			else
+				my++;
+
+			var tail = head.returnTail();
+			tail.front.back = null;
+			tail.x = head.x;
+			tail.y = head.y;
+			head.x = mx;
+			head.y = my;
+			tail.back = head.back;
+			tail.back.front = tail;
+			tail.front = head;
+			head.back = tail;
+			console.log(tail);
+
+			head.show(); 
+		}, 300);
+
+		function myKeyPress(e){
+			var keynum;
+			if(e.which){
+				keynum = e.which;
+			}
+
+			if(keynum == 37)
+				dir = 'left';
+			else if(keynum == 38)
+				dir = 'up';
+			else if(keynum == 39)
+				dir = 'right';
+			else if(keynum == 40)
+				dir = 'down';
+			else
+				console.log(keynum);
+		}
+
+
+		
+
+	</script>
+</body>
+</html>

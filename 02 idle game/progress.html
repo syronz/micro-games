@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Project 2</title>
+    </head>
+    <body>
+        <canvas id="canvas" width="400" height="600" style="border:1px solid black"></canvas>
+
+        <script>
+            var canvas = document.getElementById("canvas");
+            var ctx = canvas.getContext("2d");
+            var money = localStorage.getItem("money") ? parseFloat(localStorage.getItem("money")) : 200;
+            var speed = localStorage.getItem("speed") ? parseFloat(localStorage.getItem("speed")) : 0;
+
+            canvas.addEventListener('click',choose);
+            
+            var arrFruits = localStorage.getItem("arrFruits") ? JSON.parse(localStorage.getItem("arrFruits")) : [
+                {name:'Tomato',src:'images/Tomato.png',score:3/6000,price:50,x:320,y:60,qty:0},
+                {name:'Onion',src:'images/Onion.png',score:7/6000,price:100 ,x:320,y:150,qty:0},
+                {name:'Eggplant',src:'images/Eggplant.png',score:5/6000,price:88,x:320,y:240,qty:0},
+                {name:'Pepper',src:'images/Pepper.png',score:9/6000,price:123 ,x:320,y:330,qty:0},
+                {name:'Cabbage',src:'images/Cabbage.png',score:20/6000,price:805,x:320,y:420,qty:0},
+                {name:'Pumpkin',src:'images/Pumpkin.png',score:35/6000,price:1250,x:320,y:510,qty:0}
+            ];
+
+            console.log(arrFruits);
+
+            var arrIMG = [];
+
+
+            for(var i = 0; i < arrFruits.length; i++){
+                arrIMG[i] = new Image();
+                arrIMG[i].src = arrFruits[i].src;
+            }
+
+            arrIMG[arrFruits.length - 1].onload = function () {
+                for(var i = 0; i < arrFruits.length; i++ ){
+                    ctx.drawImage(arrIMG[i], arrFruits[i].x, arrFruits[i].y);
+                    ctx.textAlign = "center";
+                    ctx.fillStyle = "#ff9000";
+                    ctx.font = "12px sans-serif";
+                    ctx.fillText(Math.round(arrFruits[i].price * 100) / 100 + '$',arrFruits[i].x + 32,arrFruits[i].y + 73);
+                    ctx.fillText(Math.round(arrFruits[i].score * 6000) + 't/ms',arrFruits[i].x + 32,arrFruits[i].y + 86);
+                }
+                    
+
+            };
+
+            function choose(e){
+                var x = e.clientX - canvas.offsetLeft;
+                var y = e.clientY - canvas.offsetTop;
+
+                arrFruits.forEach(function(n){
+                    if(x >= n.x && x <= n.x + 64 && y >= n.y && y <= n.y + 64){
+                        if(n.price < money){
+                            speed += n.score;
+                            money -= n.price;
+                            console.log(n.name);
+                            n.qty++;
+                            localStorage.setItem('speed',speed);
+                            localStorage.setItem('arrFruits',JSON.stringify(arrFruits));
+                        }
+                        
+                    }
+                        
+                });
+
+                console.log(x,y);
+            }
+
+
+            var start = setInterval(function(){
+                ctx.clearRect(0,0,400,59);
+                ctx.clearRect(0,0,319,600);
+                money += parseFloat(speed);
+                localStorage.setItem('money',money);
+                ctx.font = "25px sans-serif";
+                ctx.fillStyle = "gray";
+
+                ctx.fillText(Math.floor(money) + '.' + (Math.round((money % 1) * 1000) + '000000').substr(0,3) + ' $',200,25);
+                ctx.fillText(Math.round(speed * 10000) / 10000 + ' t/ms',200,55);
+
+                for(var i = 0; i < arrFruits.length; i++ ){
+                    ctx.drawImage(arrIMG[i], arrFruits[i].x, arrFruits[i].y);
+                    ctx.textAlign = "center";
+                    ctx.fillStyle = "gray";
+                    ctx.font = "12px sans-serif";
+                    ctx.fillText('(' + arrFruits[i].qty+ ')',arrFruits[i].x - 32,arrFruits[i].y + 35);
+                }
+            },10);
+  
+
+        </script>
+    </body>
+</html>

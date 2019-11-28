@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Snake Game</title>
+	<style>
+		#snakeCV{
+			border: 1px solid red;
+		}
+	</style>
+</head>
+<body>
+	<canvas id="snakeCV" height="400" width="400"></canvas>
+
+	<script>
+		var ctx = document.getElementById('snakeCV');
+		ctx = ctx.getContext("2d");
+
+		ctx.fillStyle = "#000000";
+		// ctx.fillRect(0,0,39,39);
+		// ctx.fillRect(2*40,40,39,39);
+
+		var arrCord = [
+		[0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,1,0,0,0],
+		[0,0,0,0,0,0,1,0,0,0],
+		[0,0,0,0,0,0,1,0,0,0],
+		[0,0,0,0,1,1,1,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0]
+		];
+
+		for(var j = 0; j< 10; j++){
+			for (var i = 0; i < 10; i++) {
+				console.log(i,arrCord[j][i]);
+				if(arrCord[j][i])
+					ctx.fillRect(i*40,j*40,39,39);
+			}
+		}
+
+		
+		
+
+	</script>
+</body>
+</html>

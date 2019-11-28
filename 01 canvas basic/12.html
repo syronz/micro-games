@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Canvas</title>
+    </head>
+    <body>
+        <canvas id="myCanvas" width="500" height="200" style="border:1px solid red"></canvas> 
+        <script>
+            var canvas = document.getElementById("myCanvas");
+            var ctx = canvas.getContext("2d");
+            
+
+
+            color = 'green';
+            ctx.lineWidth = 6;
+
+
+            if(color == 'blue'){
+                ctx.strokeStyle = 'Blue';
+                ctx.strokeRect(20,120,50,50);
+            }
+            else if(color == 'green'){
+                ctx.strokeStyle = 'green';
+                ctx.strokeRect(90,120,50,50);
+            }
+            else if(color == 'yellow'){
+                ctx.strokeStyle = 'yellow';
+                ctx.strokeRect(160,120,50,50);
+            }
+            else if(color == 'red'){
+                ctx.strokeStyle = 'red';
+                ctx.strokeRect(230,120,50,50);
+            }
+            else if(color == 'brown'){
+                ctx.strokeStyle = 'brown';
+                ctx.strokeRect(300,120,50,50);
+            }
+            else if(color == 'orange'){
+                ctx.strokeStyle = 'orange';
+                ctx.strokeRect(370,120,50,50);
+            }
+            else{
+                ctx.font = "40px sans-serif";
+                ctx.fillText('ERROR!' ,50,50);
+            }
+            
+
+            
+
+            
+
+            
+
+
+        </script>
+    </body>
+</html>

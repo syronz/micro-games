@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Canvas</title>
+    </head>
+    <body>
+        <canvas id="myCanvas" width="500" height="200" style="border:1px solid red"></canvas> 
+        <script>
+            var canvas = document.getElementById("myCanvas");
+            var ctx = canvas.getContext("2d");
+
+            var mark = Number(prompt('Please Enter Mark: '));
+            /*
+            0-50 fail
+            50-70 medium
+            70-90 good
+            90-100 excelent
+            */
+            var status = null;
+
+            if(mark >= 0 && mark < 50)
+                status = 'fail';
+            else if(mark >= 50 && mark < 70)
+                status = 'medium';
+            else if(mark >= 70 && mark < 90)
+                status = 'good';
+            else if(mark >= 90 && mark <= 100)
+                status = 'excelent';
+            else
+                status = 'error';
+
+             
+
+
+            ctx.font = "40px sans-serif";
+            ctx.fillText('Mark = ' + mark,50,50);
+            ctx.fillText('Status = ' + status ,50,100);
+
+            
+
+
+        </script>
+    </body>
+</html>

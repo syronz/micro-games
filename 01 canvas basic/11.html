@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Canvas</title>
+    </head>
+    <body>
+        <canvas id="myCanvas" width="500" height="200" style="border:1px solid red"></canvas> 
+        <script>
+            var canvas = document.getElementById("myCanvas");
+            var ctx = canvas.getContext("2d");
+            
+            var a = 150;
+            var b = 50;
+            var c = 50;
+            var d = 300;
+           
+
+            var max = a;
+
+//             if( a > b && a > c && a > d)
+//                 max = a;
+//             else if(b > a && b > c && b > d)
+//                 max = b;
+//             else if(c > a && c > b && c > d)
+//                 max = c;
+//             else
+//                 max = d;
+
+            if(b > max)
+                max = b;
+            if(c > max)
+                max = c;
+            if(d > max)
+                max = d;
+            
+             
+
+
+            ctx.font = "40px sans-serif";
+            ctx.fillText('Max = ' + max,50,50);
+
+            
+
+
+        </script>
+    </body>
+</html>

@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Game: Mario</title>
+    </head>
+    <body onkeydown="getKeyCode(event)">
+        <canvas id="marioCanvas" height="300" width="300" style="border:1px solid black"></canvas>  
+
+    <script>
+        var canvas = document.getElementById("marioCanvas");
+        var ctx = canvas.getContext('2d');
+        var G = 7.8;
+        var CEIL = 280;
+
+        var bgImg = new Image();
+        bgImg.src = 'images/bg.jpg';
+        
+        var arrM = [];
+        arrM[0] = new Image();
+        arrM[0].src = 'images/marioWalk1.png';
+        arrM[1] = new Image();
+        arrM[1].src = 'images/marioWalk2.png';
+        arrM[2] = new Image();
+        arrM[2].src = 'images/marioWalk3.png';
+
+
+        var Mario = function(x,y){
+            this.x = x;
+            this.y = y;
+            this.dir = 'down';
+            this.v = 20;
+        }
+
+        Mario.prototype.draw = function(pos){
+            ctx.drawImage(arrM[pos],this.x,this.y,42,68);
+        }
+        Mario.prototype.setSpeed = function(){ 
+            if(this.dir == 'down'){
+                this.v = G + this.v;
+                this.y += this.v;
+                if(this.y >= CEIL - 68)
+                    this.y = CEIL - 68;
+            }
+            else{
+                this.v = this.v - G;
+                this.y -= this.v;
+                if(this.v <= 0){
+                    this.v = 0;
+                    this.dir = 'down';
+                }
+            }
+        }
+
+        var m1 = new Mario(50,CEIL - 368);
+
+        var walk = 0;
+        var run = setInterval(function(){
+            ctx.drawImage(bgImg,0,0,300,300,0,0,300,300);
+            walk++;
+            m1.draw(walk%3);
+            m1.setSpeed();
+        },100);
+
+        getKeyCode = function(e){
+            console.log(e.code);
+            if(e.code == 'Space'){
+                if(m1.y >= (CEIL - 68)){
+                    m1.dir = 'up';
+                    m1.v = 50;
+                }
+                
+            }
+        }
+    </script>
+    </body>
+</html>

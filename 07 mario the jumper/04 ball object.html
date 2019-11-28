@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Game: Mario</title>
+    </head>
+    <body>
+        <canvas id="marioCanvas" height="400" width="300" style="border:1px solid red"></canvas>  
+    <body>
+    <script>
+        var canvas = document.getElementById("marioCanvas");
+        var ctx = canvas.getContext('2d');
+        ctx.moveTo(0,10);
+        ctx.lineTo(300,10);
+        ctx.stroke();
+
+
+        var Ball = function(x,y){
+            this.x = x;
+            this.y = y;
+        }
+        Ball.prototype.draw = function(){
+            ctx.beginPath();
+            ctx.arc(this.x,this.y,10,0,Math.PI * 2,false);
+            ctx.closePath();
+            ctx.fill();
+
+        }
+
+        var b1 = new Ball(120,105);
+        b1.draw();
+
+        var b2 = new Ball(200,140);
+        b2.draw();
+
+        
+    </script>
+</html>

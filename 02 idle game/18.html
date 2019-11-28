@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Project 2</title>
+    </head>
+    <body>
+        <canvas id="canvas" width="400" height="600" style="border:1px solid black"></canvas>
+
+        <script>
+            var canvas = document.getElementById("canvas");
+            var ctx = canvas.getContext("2d");
+
+            var tomato = new Image();
+            tomato.src = "images/Tomato.png";
+
+            tomato.onload = function () {
+                //draw background image
+                ctx.drawImage(tomato, 0, 0);
+
+            };
+
+
+
+            
+
+        </script>
+    </body>
+</html>

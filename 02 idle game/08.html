@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Project 2</title>
+    </head>
+    <body>
+        <canvas id="canvas" width="400" height="600" style="border:1px solid black"></canvas>
+
+        <script>
+            var canvas = document.getElementById("canvas");
+            var ctx = canvas.getContext("2d");
+            var COUNT = 6;
+
+            function Point(x,y,color){
+                this.x = x;
+                this.y = y;
+                this.color = color;
+            }
+
+            Point.prototype.show = function(){
+                ctx.beginPath();
+                ctx.fillStyle = this.color;
+                ctx.arc(this.x,this.y,5,0,Math.PI * 2);
+                ctx.fill();
+            }
+
+            Point.prototype.createLine = function(point){
+                ctx.beginPath();
+                ctx.strokeStyle = 'gray';
+                ctx.moveTo(this.x,this.y);
+                ctx.lineTo(point.x,point.y);
+                ctx.stroke();
+            }
+
+
+            var points = [];
+            var colors = ['blue','red','orange','pink','brown','yellow','maroon','black','gray','green'];
+            for(var i = 0; i < COUNT; i++){
+                points.push(new Point(Math.random()*400,Math.random()*600,colors[i%10]));
+            }
+
+            points.forEach(function(p){
+                p.show();
+            });
+
+            for(var i = 0; i < COUNT; i++){
+                for(var j = i; j < COUNT; j++)
+                    points[i].createLine(points[j]);
+            }
+
+
+
+            console.log(points);
+            
+
+
+            
+
+        </script>
+    </body>
+</html>

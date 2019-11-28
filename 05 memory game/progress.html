@@ -1,0 +1,138 @@
+<!doctype html>
+<html>
+    <head>
+        <title> Project 5 </title>
+    </head>
+    <body>
+        <canvas id="smallGame" width="400" height="400" style="border:1px solid grey"></canvas>
+        <p>Clicked: <span id="score">0</span> </p>
+        <script>
+            var canvas = document.getElementById("smallGame");
+            var ctx = canvas.getContext("2d");
+            var scoreTag = document.getElementById("score");
+
+            function Square(n){
+                this.n = n;
+                this.state = 'black';
+            }
+            Square.prototype.draw = function(i){
+                if(this.state == 'black'){
+                    ctx.strokeStyle = "Black";
+                    ctx.fillRect(4 + i * 100 - Math.floor(i /4) * 400, 4 + Math.floor(i /4) * 100,93,93);
+                }
+                else{
+                    ctx.strokeStyle = "orange";
+                    ctx.strokeRect(4 + i * 100 - Math.floor(i /4) * 400, 4 + Math.floor(i /4) * 100,93,93);
+                }
+            }
+            var a = new Square(3);
+
+            
+            var arrImg = [];
+            
+            for(var i = 1; i<9; i++){
+                arrImg[i-1] = new Image();
+                arrImg[i-1].src = 'image/' + i + '.png';
+            }
+
+
+            
+            var arr = [];
+            var k = 1;
+            
+            for(var i = 0; i < 16; i+=2){
+                arr[i] = arr[i+1] = k++;
+            }
+
+            
+            function shuffle(array) {
+                var currentIndex = array.length, temporaryValue, randomIndex;
+                while (0 !== currentIndex) {
+                    randomIndex = Math.floor(Math.random() * currentIndex);
+                    currentIndex -= 1;
+
+                    temporaryValue = array[currentIndex];
+                    array[currentIndex] = array[randomIndex];
+                    array[randomIndex] = temporaryValue;
+                }
+                return array;
+            }
+
+            arr = shuffle(arr);
+            var arrSquare = [];
+            for(var i = 0; i < 16; i++){
+                arrSquare[i] = new Square(arr[i]);
+            }
+
+            canvas.addEventListener('click',getCordinate);
+
+            var level = 0;
+            var preSelect = 0;
+            var preIndex = -1;
+            var score = 0;
+            function getCordinate(e){
+                ctx.clearRect(0,0,400,400);
+                var ok = null;
+                var x = e.clientX - canvas.offsetLeft;
+                var y = e.clientY - canvas.offsetTop;
+
+                var nx = Math.floor(x/100);
+                var ny = Math.floor(y/100);
+
+                console.log(level,ok);
+
+                if(level == 0){
+                    arrSquare[nx + 4 * ny].state = 'orange';
+                    preSelect = arrSquare[nx + 4 * ny].n;
+                    preIndex = nx + 4 * ny;
+                    level++;
+                }
+                else if(level == 1){
+                    canvas.style.pointerEvents = 'none';
+                    arrSquare[nx + 4 * ny].state = 'orange';
+                    if(preSelect == arrSquare[nx + 4 * ny].n){
+                        arrSquare[nx + 4 * ny].state = 'orange';
+                        arrSquare[preIndex].state = 'orange';
+                        canvas.style.pointerEvents = 'auto'; 
+                    }
+                    else{
+                        score++;
+                        scoreTag.innerHTML = score;
+                        var run = setInterval(function(){
+                            arrSquare[preIndex].state = 'black';
+                            arrSquare[nx + 4 * ny].state = 'black';
+                            canvas.style.pointerEvents = 'auto'; 
+                            ctx.clearRect(0,0,400,400);
+                            for(var i = 0; i < 16; i++){
+                                ctx.drawImage(arrImg[arr[i]-1],18 + i * 100 - Math.floor(i /4) * 400, 18 + Math.floor(i /4) * 100);
+                                arrSquare[i].draw(i);
+                            }
+                            clearTimeout(run);
+                        },1000);
+                        
+                    }
+                    level--;
+                }
+
+                for(var i = 0; i < 16; i++){
+                    ctx.drawImage(arrImg[arr[i]-1],18 + i * 100 - Math.floor(i /4) * 400, 18 + Math.floor(i /4) * 100);
+                    arrSquare[i].draw(i);
+                }
+
+            }
+
+            //-------------------------- Drawing Part
+            arrImg[7].onload = function() {
+                for(var i = 0; i < 16; i++){
+                    ctx.drawImage(arrImg[arr[i]-1],18 + i * 100 - Math.floor(i /4) * 400, 18 + Math.floor(i /4) * 100);
+                    arrSquare[i].draw(i);
+                }
+
+            };
+
+
+
+
+        </script>
+    </body>
+</html>

@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Game: Mario</title>
+    </head>
+    <body>
+        <canvas id="marioCanvas" width="300" height="400" style="border:1px solid red"></canvas>  
+    <body>
+    <script>
+        var canvas = document.getElementById("marioCanvas");
+        var ctx = canvas.getContext('2d');
+        var G = 0.098;
+        var CEIL = 380;
+
+
+        
+
+
+        var Ball = function(x,y){
+            this.x = x;
+            this.y = y;
+            this.v = 0;
+        }
+        Ball.prototype.draw = function(){
+            ctx.beginPath();
+            ctx.arc(this.x,this.y,10,0,Math.PI * 2,false);
+            ctx.closePath();
+            ctx.fill();
+            
+        }
+
+        /* free fall formula: V[n] = G + V[n-1] */
+        Ball.prototype.setSpeed = function(){
+            this.v = G + this.v;
+            this.y += this.v;
+            if(this.y >= CEIL - 10)
+                this.y = CEIL - 10;
+        }
+
+        var b1 = new Ball(100,50);
+        var b2 = new Ball(200,0);
+
+        var timer = 0;
+        var run = setInterval(function(){
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+
+            ctx.moveTo(0,CEIL);
+            ctx.lineTo(300,CEIL);
+            ctx.stroke();
+
+            b1.setSpeed();
+            b1.draw();
+
+            b2.setSpeed();
+            b2.draw();
+        },10);
+    </script>
+</html>

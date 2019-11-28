@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Canvas</title>
+    </head>
+    <body>
+        <canvas id="myCanvas" width="500" height="610" style="border:1px solid red"></canvas> 
+        <script>
+            var canvas = document.getElementById("myCanvas");
+            var ctx = canvas.getContext("2d");
+            var arrColor = ['yellow','red','blue','black','green'];
+            
+
+            function man(x,y){
+                ctx.beginPath();
+                ctx.arc(x+25,y-20,20,0,2 * Math.PI);
+                ctx.fillStyle = arrColor[generateRandom(arrColor.length)];
+                ctx.fill();
+                ctx.fillRect(x,y,50,50);
+                ctx.strokeStyle = 'white';
+                ctx.lineWidth = 3;
+                ctx.strokeRect(x-1,y-1,51,51);
+            }
+
+            function generateRandom(n){
+                return Math.round(Math.random() * n);
+            }
+
+
+
+            for(var i = 0; i < 20 ; i += 2){
+                x = generateRandom(500);
+                y = generateRandom(610);
+                man(x,y);
+            }
+           
+        </script>
+    </body>
+</html>

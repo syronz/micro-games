@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Canvas</title>
+    </head>
+    <body>
+        <canvas id="myCanvas" width="500" height="200" style="border:1px solid red"></canvas> 
+        <script>
+            var canvas = document.getElementById("myCanvas");
+            var ctx = canvas.getContext("2d");
+
+            /*
+            number
+            string
+            boolean
+            undefined
+            */
+
+            var num = NaN == NaN;
+
+            ctx.font = "40px sans-serif";
+            ctx.fillText('result in num = ' + num,50,50);
+
+            
+
+
+        </script>
+    </body>
+</html>

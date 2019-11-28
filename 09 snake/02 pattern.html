@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Snake Game</title>
+	<style>
+		#snakeCV{
+			border: 1px solid red;
+		}
+	</style>
+</head>
+<body>
+	<canvas id="snakeCV" height="400" width="400"></canvas>
+
+	<script>
+		var ctx = document.getElementById('snakeCV');
+		ctx = ctx.getContext("2d");
+
+		ctx.fillStyle = "#FF0FF0";
+		ctx.fillRect(0,0,150,75);
+	</script>
+</body>
+</html>

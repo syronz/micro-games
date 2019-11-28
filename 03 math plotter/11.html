@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Project 3</title>
+    </head>
+    <body>
+        <canvas id="bordersCanvas" style="border:1px solid black"></canvas>
+        <div>
+            <input type="text" name="fn" id="fn" />
+            <button id="btn">Draw</button>
+            <button id="clear" onclick="cls()">Clear</button>
+        </div>
+        <script>
+            var W = 400; //width
+            var H = 400; //height
+            var S = 50; //Scale
+            var ARR = []; // all points
+            var canvas = document.getElementById('bordersCanvas');
+            canvas.width = W;
+            canvas.height = H;
+
+            var ctx = canvas.getContext("2d");
+
+            function Pix(x,y){
+                this.x = x;
+                this.y = y;
+            }
+
+            Pix.prototype.show = function(){
+                ctx.fillStyle = 'blue';
+                ctx.fillRect(this.x,this.y,1,1);
+            }
+            
+
+
+            
+
+            ctx.translate(W/2,H/2);
+            
+
+            ctx.beginPath();
+            for(var i = -W/2; i< W/2; i+=W/8){
+                ctx.fillText(i/S,i-3,-7);
+            }
+
+            ctx.scale(1,-1);
+
+            function cls(){
+                ctx.clearRect(-W/2,-H/2,W,H);
+                ctx.beginPath();
+                ctx.strokeStyle = 'red';
+                ctx.moveTo(-W/2,0);
+                ctx.lineTo(W/2,0);
+                ctx.moveTo(0,-H/2);
+                ctx.lineTo(0,H/2);
+                ctx.stroke();
+            }
+//             clear();
+            
+
+
+            var p1 = new Pix(5,5);
+            p1.show();
+
+            
+
+            //--------------------------------------- btn START
+                var btn = document.getElementById('btn');
+                btn.addEventListener('click',draw);
+                var fn = document.getElementById('fn');
+
+                function draw(){
+
+                    ctx.beginPath();
+                    ARR = [];
+                    console.log(fn.value);
+
+
+                    // y = 1/x
+                    function fx(x){
+                        x = x / S;
+                        return eval(fn.value) * S;
+                    }
+
+                    for(var i = -W/2; i< W/2; i++){
+                        var p = new Pix(i,fx(i));
+                        ARR.push(p);
+                    }
+
+                    ctx.moveTo(ARR[0].x,ARR[0].y);
+                    for(var i = 1; i < ARR.length; i++){
+                        ctx.lineTo(ARR[i].x,ARR[i].y);
+                    }
+                    ctx.strokeStyle = 'blue';
+                    ctx.stroke();
+                    ctx.closePath();
+                }
+
+            //--------------------------------------- btn END
+
+        </script>
+    </body>
+</html>

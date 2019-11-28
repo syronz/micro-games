@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Game: Mario</title>
+    </head>
+    <body>
+        <canvas id="marioCanvas" height="400" width="300" style="border:1px solid red"></canvas>  
+    <body>
+    <script>
+        var canvas = document.getElementById("marioCanvas");
+        var ctx = canvas.getContext('2d');
+        ctx.moveTo(0,0);
+        ctx.lineTo(300,400);
+        ctx.moveTo(0,400);
+        ctx.lineTo(300,0);
+        ctx.stroke();
+
+        ctx.fillStyle = '#440000';
+        ctx.rect(0,0,50,50);
+        ctx.fill();
+    </script>
+</html>

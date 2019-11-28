@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+    <head>
+        <title>TicTacToe</title>
+    </head>
+    <body>
+        <canvas id="myCanvas" style="border:1px solid red" height="210" width="210"></canvas>
+
+        <script>
+            var canvas = document.getElementById("myCanvas");
+            var ctx = canvas.getContext("2d");
+
+            ctx.moveTo(0,0);
+            ctx.lineTo(210,210);
+            ctx.stroke();
+
+            canvas.addEventListener("click",clicked);
+
+            function clicked(e){
+                console.log(e.clientX-canvas.offsetTop,e.clientY-canvas.offsetLeft);
+            }
+        </script>
+    </body>
+</html>

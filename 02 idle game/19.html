@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Project 2</title>
+    </head>
+    <body>
+        <canvas id="canvas" width="400" height="600" style="border:1px solid black"></canvas>
+
+        <script>
+            var canvas = document.getElementById("canvas");
+            var ctx = canvas.getContext("2d");
+            
+            var arrFruits = [
+                {name:'Tomato',src:'images/Tomato.png',score:0.01,price:1,x:320,y:10},
+                {name:'Onion',src:'images/Onion.png',score:0.01,price:1,x:320,y:100},
+                {name:'Eggplant',src:'images/Eggplant.png',score:0.01,price:1,x:320,y:190},
+                {name:'Pepper',src:'images/Pepper.png',score:0.01,price:1,x:320,y:280},
+                {name:'Cabbage',src:'images/Cabbage.png',score:0.01,price:1,x:320,y:370},
+                {name:'Pumpkin',src:'images/Pumpkin.png',score:0.01,price:1,x:320,y:460}
+            ];
+
+            var arrIMG = [];
+
+
+            for(var i = 0; i < arrFruits.length; i++){
+                arrIMG[i] = new Image();
+                arrIMG[i].src = arrFruits[i].src;
+            }
+
+
+
+//             var tomato = 
+//             tomato.src = "images/Tomato.png";
+
+            arrIMG[arrFruits.length - 1].onload = function () {
+                for(var i = 0; i < arrFruits.length; i++ )
+                    ctx.drawImage(arrIMG[i], arrFruits[i].x, arrFruits[i].y);
+
+            };
+
+
+
+            
+
+        </script>
+    </body>
+</html>

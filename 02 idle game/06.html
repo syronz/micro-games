@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Project 2</title>
+    </head>
+    <body>
+        <canvas id="canvas" width="400" height="600" style="border:1px solid black"></canvas>
+
+        <script>
+            var canvas = document.getElementById("canvas");
+            var ctx = canvas.getContext("2d");
+
+            function Point(x,y,color){
+                this.x = x;
+                this.y = y;
+                this.color = color;
+            }
+
+            o1 = new Point(50,130,'red');
+            o2 = new Point(230,30,'blue');
+
+            ctx.beginPath();
+            ctx.fillStyle = o1.color;
+            ctx.arc(o1.x,o1.y,5,0,Math.PI * 2);
+            ctx.fill();
+
+            ctx.beginPath();
+            ctx.fillStyle = o2.color;
+            ctx.arc(o2.x,o2.y,5,0,Math.PI * 2);
+            ctx.fill();
+
+
+            
+
+        </script>
+    </body>
+</html>

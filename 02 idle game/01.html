@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Project 2</title>
+    </head>
+    <body>
+        <canvas id="canvas" width="400" height="600" style="border:1px solid black"></canvas>
+
+        <script>
+            var canvas = document.getElementById("canvas");
+            var ctx = canvas.getContext("2d");
+
+            ctx.lineWidth = 15;
+            ctx.lineJoin = 'bevel';
+            ctx.lineCap = 'round';
+
+            ctx.fillStyle = 'blue';
+            ctx.strokeStyle = 'red';
+            ctx.moveTo(100,100);
+            ctx.lineTo(350,100);
+            ctx.lineTo(300,300);
+            ctx.lineTo(100,300);
+//             ctx.lineTo(100,100);
+//             ctx.closePath();
+            ctx.stroke();
+//             ctx.fill();
+
+            ctx.strokeRect(100,360,200,200);
+
+        </script>
+    </body>
+</html>

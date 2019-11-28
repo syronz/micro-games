@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+    <head>
+        <title>TicTacToe</title>
+    </head>
+    <body>
+        <canvas id="myCanvas"></canvas>
+
+        <script>
+            var canvas = document.getElementById("myCanvas");
+            var ctx = canvas.getContext("2d");
+
+            var LENGTH = canvas.width = canvas.height = 210;
+            var CELL_LENGTH = LENGTH / 3;
+
+            ctx.moveTo(CELL_LENGTH,0);
+            ctx.lineTo(CELL_LENGTH,LENGTH);
+            ctx.moveTo(CELL_LENGTH * 2,0);
+            ctx.lineTo(CELL_LENGTH * 2,LENGTH);
+
+            ctx.moveTo(0,CELL_LENGTH);
+            ctx.lineTo(LENGTH,CELL_LENGTH);
+            ctx.moveTo(0,CELL_LENGTH * 2);
+            ctx.lineTo(LENGTH,CELL_LENGTH * 2);
+
+            ctx.strokeRect(0,0,LENGTH,LENGTH);
+
+            ctx.stroke();
+
+
+
+            canvas.addEventListener("click",clicked);
+
+            function clicked(e){
+                console.log(e.clientX-canvas.offsetTop,e.clientY-canvas.offsetLeft);
+            }
+        </script>
+    </body>
+</html>

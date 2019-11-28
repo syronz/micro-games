@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Game: Mario</title>
+    </head>
+    <body>
+        <canvas id="marioCanvas" height="400" width="300" style="border:1px solid red"></canvas>  
+    <body>
+    <script>
+        var canvas = document.getElementById("marioCanvas");
+        var ctx = canvas.getContext('2d');
+        
+        var marioImg = new Image();
+        marioImg.src = 'images/marioFrame.png';
+
+        marioImg.onload = function(){
+            draw();
+        }
+
+        var arrM = [];
+        var draw = function(){
+            ctx.drawImage(marioImg,0,0,306,274);
+
+            arrM[0] = ctx.getImageData(15, 12, 48, 68); //walk1
+            arrM[1] = ctx.getImageData(15 + 48, 12, 35, 68); //walk2
+            arrM[2] = ctx.getImageData(15 + 48 * 2, 12, 35, 68); //walk3
+            arrM[3] = ctx.getImageData(15 + 48 * 3, 12, 35, 68); //break
+            arrM[4] = ctx.getImageData(15 + 48 * 4, 12, 35, 68); //jump
+            arrM[5] = ctx.getImageData(15 + 48 * 5, 12, 35, 68); //stop
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+
+
+
+            ctx.putImageData(arrM[0],0,10);
+            ctx.putImageData(arrM[1],50 * 1,10);
+            ctx.putImageData(arrM[2],50 * 2,10);
+            ctx.putImageData(arrM[3],50 * 3,10);
+            ctx.putImageData(arrM[4],50 * 4,10);
+            ctx.putImageData(arrM[5],50 * 5,10);
+        }
+
+        var walk = 0;
+        var run = setInterval(function(){
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+
+            walk++;
+            ctx.putImageData(arrM[walk%3],150,300);
+        },100);
+    </script>
+</html>

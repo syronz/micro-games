@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Canvas</title>
+    </head>
+    <body>
+        <canvas id="myCanvas" width="500" height="200" style="border:1px solid red"></canvas> 
+        <script>
+            var canvas = document.getElementById("myCanvas");
+            var ctx = canvas.getContext("2d");
+
+            var name = prompt('Please Enter Your Name: ');
+            var fontSize =  prompt('Please Enter Font Size: ');
+
+            if(isNaN(fontSize)){
+                fontSize = 40;
+            }
+
+            ctx.font = fontSize + "px sans-serif";
+            ctx.fillText('Your Name is ' + name,50,50);
+
+            
+
+
+        </script>
+    </body>
+</html>

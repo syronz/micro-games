@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Project 2</title>
+    </head>
+    <body>
+        <canvas id="canvas" width="400" height="600" style="border:1px solid black"></canvas>
+
+        <script>
+            var canvas = document.getElementById("canvas");
+            var ctx = canvas.getContext("2d");
+
+            function Point(x,y,color){
+                this.x = x;
+                this.y = y;
+                this.color = color;
+            }
+
+            Point.prototype.show = function(){
+                ctx.beginPath();
+                ctx.fillStyle = this.color;
+                ctx.arc(this.x,this.y,5,0,Math.PI * 2);
+                ctx.fill();
+            }
+
+            Point.prototype.rotate = function(t){
+                var tmpx = this.x * Math.cos(t) - this.y * Math.sin(t);
+                var tmpy = this.x * Math.sin(t) + this.y * Math.cos(t);
+                this.x = tmpx;
+                this.y = tmpy;
+            }
+
+            Point.prototype.rotateBy = function(point,t){
+                var tmpPoint = new Point(this.x - point.x, this.y - point.y);
+                tmpPoint.rotate(t);
+                this.x = tmpPoint.x + point.x;
+                this.y = tmpPoint.y + point.y;
+            }
+
+            Point.prototype.createLine = function(point,color = 'gray'){
+                ctx.beginPath();
+                ctx.strokeStyle = color;
+                ctx.lineWidth = 2;
+                ctx.moveTo(this.x,this.y);
+                ctx.lineTo(point.x,point.y);
+                ctx.stroke();
+            }
+
+            var p1 = new Point(200,200,'red');
+            
+
+
+
+            
+
+
+            var p2 = new Point(200,100,'green');
+            p2.show();
+
+            var minuteHand = new Point(200,110,'orange');
+            var hourHand = new Point(200,130,'black');
+
+
+            var now = new Date();
+            var second = now.getSeconds();
+            var minute = now.getMinutes() * 60;
+            var hour = (now.getHours() % 12) * 3600;
+            console.log(typeof minute);
+
+
+
+
+
+            ctx.beginPath();
+            ctx.strokeStyle = 'black';
+            ctx.clearRect(0,0,400,600);
+            ctx.arc(p1.x,p1.y,120,0,2*Math.PI);
+            ctx.stroke();
+
+            p1.show();
+            p2.rotateBy(p1,(Math.PI / 30) * second );
+            minuteHand.rotateBy(p1,(Math.PI / 1800) * minute);
+            hourHand.rotateBy(p1,(Math.PI / 21600) * hour);
+            
+            p1.createLine(p2,'red');
+            p1.createLine(minuteHand,'brown');
+            p1.createLine(hourHand,'black');
+
+
+            
+
+//             
+            
+
+            
+            var start = setInterval(function(){
+                ctx.beginPath();
+                ctx.strokeStyle = 'black';
+                ctx.clearRect(0,0,400,600);
+                ctx.arc(p1.x,p1.y,120,0,2*Math.PI);
+                ctx.stroke();
+
+                p1.show();
+                p2.rotateBy(p1,Math.PI / 30 );
+
+                minuteHand.rotateBy(p1,Math.PI / 1800);
+                hourHand.rotateBy(p1,Math.PI / 108000);
+
+                p1.createLine(p2,'red');
+                p1.createLine(minuteHand,'brown');
+                p1.createLine(hourHand,'black');
+            },1000);
+
+
+
+        </script>
+    </body>
+</html>
